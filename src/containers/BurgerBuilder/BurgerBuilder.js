@@ -8,17 +8,17 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import * as actionTypes from '../../store/actions'
+import * as actionTypes from '../../store/actions/actionTypes'
 import {connect} from 'react-redux'
-
+import * as burgerbuilderactions from '../../store/actions/BurgerBuilder'
+import * as orderactions from '../../store/actions/order'
 
 class BurgerBuilder extends Component{
 
     state={
         purchasable:false,
-        purchasing: false,
-        loading:false,
-        error:false
+        purchasing: false
+        
     }
 
 
@@ -31,9 +31,7 @@ class BurgerBuilder extends Component{
     }
 
     componentDidMount=()=>{
-        // axios.get('https://react-my-burger-f9a86.firebaseio.com/ingredients.json')
-        //     .then(response=>{this.setState({ingredients:response.data})})
-        //     .catch(error=>this.setState({error:error}))
+        this.props.initingeridients()
     }
 
 
@@ -50,7 +48,7 @@ class BurgerBuilder extends Component{
     
 
     ContinueHandler=()=>{
-
+        // this.props.onInitpurchased()
         this.props.history.push('/checkout')
         // alert('You Continued')
 
@@ -70,7 +68,7 @@ class BurgerBuilder extends Component{
 
         
 
-        let burger=this.state.error ?<p style={{textAlign:'center'}}>there's an error</p> :<Spinner/>
+        let burger=this.props.error ?<p style={{textAlign:'center'}}>there's an error</p> :<Spinner/>
         let orderSummary=null
         
 
@@ -117,16 +115,20 @@ class BurgerBuilder extends Component{
 
 const mapStatesToProps= state=>{
     return{
-        ings: state.ingredients,
-        totalprice: state.totalprice
+        ings: state.burgerbuilder.ingredients,
+        totalprice: state.burgerbuilder.totalprice,
+        error: state.burgerbuilder.error
     };
     
 }
 
 const mapDispatchToProps= dispatch=>{
     return{
-        Addings : (ingsname)=>dispatch({type:actionTypes.Addingredients ,ingredientName:ingsname}),
-        Removeings : (ingsname)=>dispatch({type:actionTypes.Removeingredients,ingredientName:ingsname})
+        Addings : (ingsname)=>dispatch(burgerbuilderactions.addingredients(ingsname)),
+        Removeings : (ingsname)=>dispatch(burgerbuilderactions.removeingredients(ingsname)),
+        initingeridients: ()=> dispatch(burgerbuilderactions.initingredients()),
+
+
     }
     
 }
