@@ -13,13 +13,15 @@ const reducer=(state=initialState,action)=>{
         case(actionTypes.Purchase_burger_success):
             const newOrder={
                 ...action.orderData,
-                id:action.orderId
+                id:action.orderId,
+                
             }
 
             return(
                 {
                 ...state,
                 loading:false,
+                purchased:true,
                 order:state.order.concat(newOrder)
             })
             
@@ -33,7 +35,7 @@ const reducer=(state=initialState,action)=>{
         case(actionTypes.Purchased_init):{
             return{
                 ...state,
-                purchased:true
+                purchased:false
             }
         }
         

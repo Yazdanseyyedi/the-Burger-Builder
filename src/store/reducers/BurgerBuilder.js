@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState={
     ingredients:null,
     totalprice:2,
-    error:false
+    error:false,
+    Building:false
 }
 
 const INGRIDIENT_PRICE={
@@ -23,7 +24,8 @@ const reducer=(state=initialState,action)=>{
                     ...state.ingredients,
                     [action.ingredientName]:state.ingredients[action.ingredientName]+1
                 },
-                totalprice:state.totalprice+ INGRIDIENT_PRICE[action.ingredientName]
+                totalprice:state.totalprice+ INGRIDIENT_PRICE[action.ingredientName],
+                Building:true
                 
             })
 
@@ -32,7 +34,8 @@ const reducer=(state=initialState,action)=>{
                 ...state,
                 ingredients:action.ingredients,
                 error: false,
-                totalprice:2
+                totalprice:2,
+                Building:false
             })
 
         case(actionTypes.Fetch_ingredients_failed):
@@ -47,7 +50,8 @@ const reducer=(state=initialState,action)=>{
                     ...state.ingredients,
                     [action.ingredientName]:state.ingredients[action.ingredientName]-1
                 },
-                totalprice:state.totalprice- INGRIDIENT_PRICE[action.ingredientName]
+                totalprice:state.totalprice- INGRIDIENT_PRICE[action.ingredientName],
+                Building:true
                 
             })
         default:

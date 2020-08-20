@@ -19,7 +19,8 @@ const buildControls=(props)=>(
         added={()=>props.ingredientsAdd(ctrl.type)}
         removed={()=>props.ingredientsRemove(ctrl.type)}
         disable={props.disableInfo[ctrl.type]}/>))}
-        <button className={classes.OrderButton} disabled={!props.purchasable} onClick={props.purchasing}>Order Now</button>
+        <button className={classes.OrderButton} disabled={!props.purchasable} onClick={props.purchasing}>
+            {props.isAuthenticated ? 'Order Now':'Sign Up Now'}</button>
     </div>
 )
 
